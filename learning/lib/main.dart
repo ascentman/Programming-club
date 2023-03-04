@@ -1,7 +1,25 @@
-void main() {
-  // runApp(const MyApp());
-}
+import 'package:learning/tola.dart';
 
+void main() {
+  final bmv1 = BMWCar(
+    weight: 567,
+    color: 'blue',
+    isOld: true,
+  ); // runApp(const MyApp());
+}
+  final mers1 = MercedesCar(
+    weight: 1000,
+    color: 'purple',
+    isOld: false, seatsCount:
+  ); // runApp(const MyApp());
+
+  final mers2 = MercedesCar(
+    weight: 1100,
+    color: 'black',
+    isOld: true, 
+  ); // runApp(const MyApp());
+
+print ([mers1,mers2,bmv1,])
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
 
