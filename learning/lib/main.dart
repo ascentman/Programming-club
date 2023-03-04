@@ -1,11 +1,31 @@
+import 'package:learning/vova.dart';
+
 void main() {
+  final BMW1 = BMWCar(
+    weight: 1200,
+    color: 'Black',
+    isOld: false,
+  );
+  final BMW2 = BMWCar(
+    weight: 1800,
+    color: 'Red',
+    isOld: false,
+  );
+  final Nissan1 = NissanCar(
+    weight: 1600,
+    color: 'White',
+    seatCount: 5,
+  );
+
+  print([BMW1, BMW2, Nissan1].length);
+
   // runApp(const MyApp());
 }
 
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
 
-//   // This widget is the root of your application.
+// //   // This widget is the root of your application.
 //   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
