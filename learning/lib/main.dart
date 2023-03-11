@@ -27,13 +27,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  bool isOnStart = true;
   final myBMW = Car(imagePath: 'assets/bmw.png', maxSpeed: 200);
   final myMercedes = Car(imagePath: 'assets/mercedes.png', maxSpeed: 300);
 
   void _incrementCounter() {
     setState(() {
-      _counter++;
+      isOnStart = !isOnStart;
     });
   }
 
@@ -45,21 +45,23 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CarWidget(car: myBMW),
-            const SizedBox(
-              height: 50,
+            CarWidget(
+              car: myBMW,
+              isOnStart: isOnStart,
             ),
-            CarWidget(car: myMercedes),
+            CarWidget(
+              car: myMercedes,
+              isOnStart: isOnStart,
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.local_fire_department),
       ),
     );
   }
@@ -77,17 +79,24 @@ class Car {
 
 class CarWidget extends StatelessWidget {
   final Car car;
+  final bool isOnStart;
 
   const CarWidget({
     Key? key,
     required this.car,
+    required this.isOnStart,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      car.imagePath,
-      width: 250,
+    return AnimatedAlign(
+      curve: Curves.easeInOutCirc,
+      alignment: isOnStart ? Alignment.centerLeft : Alignment.centerRight,
+      duration: Duration(milliseconds: ((1000 / car.maxSpeed) * 1000).toInt()),
+      child: Image.asset(
+        car.imagePath,
+        width: 200,
+      ),
     );
   }
 }
