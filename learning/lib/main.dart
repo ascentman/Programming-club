@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'F1 Race'),
     );
   }
 }
@@ -28,6 +28,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final myBMW = Car(imagePath: 'assets/bmw.png', maxSpeed: 200);
+  final myMercedes = Car(imagePath: 'assets/mercedes.png', maxSpeed: 300);
 
   void _incrementCounter() {
     setState(() {
@@ -46,10 +48,11 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              _counter.toString(),
-              style: const TextStyle(fontSize: 30),
+            CarWidget(car: myBMW),
+            const SizedBox(
+              height: 50,
             ),
+            CarWidget(car: myMercedes),
           ],
         ),
       ),
@@ -58,6 +61,33 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
+    );
+  }
+}
+
+class Car {
+  final String imagePath;
+  final int maxSpeed;
+
+  Car({
+    required this.imagePath,
+    required this.maxSpeed,
+  });
+}
+
+class CarWidget extends StatelessWidget {
+  final Car car;
+
+  const CarWidget({
+    Key? key,
+    required this.car,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      car.imagePath,
+      width: 250,
     );
   }
 }
