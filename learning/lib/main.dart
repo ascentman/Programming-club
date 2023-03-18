@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'F1 Race'),
+      home: const MyHomePage(title: 'Обмін валют'),
     );
   }
 }
@@ -28,7 +28,89 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: const Placeholder(),
+      body: Container(
+        color: Colors.blue,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              flex: 5,
+              child: Container(
+                  color: Colors.cyan,
+                  child: Column(
+                    children: const [
+                      CurrencyItem(
+                        currency: 'USD',
+                        value: '100',
+                      ),
+                      CurrencyItem(
+                        currency: 'EUR',
+                        value: '80',
+                      ),
+                      CurrencyItem(
+                        currency: 'PLN',
+                        value: '400',
+                      ),
+                      CurrencyItem(
+                        currency: 'UAH',
+                        value: '1200',
+                      ),
+                    ],
+                  )),
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                color: Colors.red,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CurrencyItem extends StatelessWidget {
+  final String currency;
+  final String value;
+
+  const CurrencyItem({
+    Key? key,
+    required this.currency,
+    required this.value,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Container(
+        height: 100,
+        color: Colors.green,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                currency,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                ),
+              ),
+              Text(
+                value,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
