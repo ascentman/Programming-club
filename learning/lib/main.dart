@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,49 +26,46 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(title),
       ),
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/background.png'), fit: BoxFit.cover),
+            image: AssetImage('assets/background.png'),
+            fit: BoxFit.cover,
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 5,
-              child: Container(
-                  color: Colors.cyan,
-                  child: Column(
-                    children: const [
-                      CurrencyItem(
-                        currency: 'USD',
-                        value: '100',
-                      ),
-                      CurrencyItem(
-                        currency: 'EUR',
-                        value: '80',
-                      ),
-                      CurrencyItem(
-                        currency: 'PLN',
-                        value: '400',
-                      ),
-                      CurrencyItem(
-                        currency: 'UAH',
-                        value: '1200',
-                      ),
-                    ],
-                  )),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: const [
+                SizedBox(
+                  height: 20,
+                ),
+                CurrencyItem(
+                  currency: 'USD',
+                  value: '100',
+                  isFirst: true,
+                ),
+                CurrencyItem(
+                  currency: 'EUR',
+                  value: '80',
+                ),
+                CurrencyItem(
+                  currency: 'PLN',
+                  value: '400',
+                ),
+                CurrencyItem(
+                  currency: 'UAH',
+                  value: '1200',
+                ),
+              ],
             ),
-            Expanded(
-              flex: 3,
-              child: Container(
-                color: Colors.red,
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );
@@ -77,11 +75,13 @@ class MyHomePage extends StatelessWidget {
 class CurrencyItem extends StatelessWidget {
   final String currency;
   final String value;
+  final bool isFirst;
 
   const CurrencyItem({
     Key? key,
     required this.currency,
     required this.value,
+    this.isFirst = false,
   }) : super(key: key);
 
   @override
@@ -89,27 +89,72 @@ class CurrencyItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Container(
-        height: 100,
-        color: Colors.green,
+        height: 80,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 currency,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 25,
                 ),
               ),
-              Text(
-                value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                ),
-              )
+              isFirst
+                  ? SizedBox(
+                      width: 200,
+                      height: 40,
+                      child: TextField(
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                          signed: true,
+                        ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        textAlign: TextAlign.end,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Введи значення',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 18,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Text(
+                      value,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                      ),
+                    )
             ],
           ),
         ),
@@ -117,3 +162,25 @@ class CurrencyItem extends StatelessWidget {
     );
   }
 }
+
+// final converter = converterFromJson(json);
+// print(converter.result);
+// print(converter.success);
+
+const json = '''
+{
+  "date": "2022-03-31",
+  "historical": true,
+  "info": {
+    "rate": 0.033901,
+    "timestamp": 1648771199
+  },
+  "query": {
+    "amount": 100,
+    "from": "UAH",
+    "to": "USD"
+  },
+  "result": 5555,
+  "success": true
+}
+''';
