@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
       home: const MyHomePage(title: 'Обмін валют'),
     );
@@ -28,6 +28,10 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: const Icon(
+          Icons.monetization_on_outlined,
+          size: 40,
+        ),
         title: Text(title),
       ),
       body: DecoratedBox(
@@ -47,7 +51,7 @@ class MyHomePage extends StatelessWidget {
                   height: 20,
                 ),
                 CurrencyItem(
-                  currency: 'USD',
+                  currency: 'UAH',
                   value: '100',
                   isFirst: true,
                 ),
@@ -60,7 +64,7 @@ class MyHomePage extends StatelessWidget {
                   value: '400',
                 ),
                 CurrencyItem(
-                  currency: 'UAH',
+                  currency: 'USD',
                   value: '1200',
                 ),
               ],
