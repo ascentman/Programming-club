@@ -99,11 +99,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 const CurrencyItem(
                   currency: 'PLN',
-                  value: '400',
+                  value: '0',
                 ),
                 const CurrencyItem(
                   currency: 'GBR',
-                  value: '120',
+                  value: '0',
                 ),
               ],
             ),
