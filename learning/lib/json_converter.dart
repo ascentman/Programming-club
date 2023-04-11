@@ -11,7 +11,6 @@ String converterToJson(Converter data) => json.encode(data.toJson());
 class Converter {
   Converter({
     required this.date,
-    required this.historical,
     required this.info,
     required this.query,
     required this.result,
@@ -19,7 +18,6 @@ class Converter {
   });
 
   DateTime date;
-  bool historical;
   Info info;
   Query query;
   double result;
@@ -27,7 +25,6 @@ class Converter {
 
   factory Converter.fromJson(Map<String, dynamic> json) => Converter(
         date: DateTime.parse(json["date"]),
-        historical: json["historical"],
         info: Info.fromJson(json["info"]),
         query: Query.fromJson(json["query"]),
         result: json["result"]?.toDouble(),
@@ -37,7 +34,6 @@ class Converter {
   Map<String, dynamic> toJson() => {
         "date":
             "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-        "historical": historical,
         "info": info.toJson(),
         "query": query.toJson(),
         "result": result,
