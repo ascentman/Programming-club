@@ -33,11 +33,16 @@ class _MyHomePageState extends State<MyHomePage> {
   final String _defaultValue = '1';
   late Future<Converter> _usd;
   late Future<Converter> _eur;
+  late Future<Converter> _pln;
+  late Future<Converter> _gbp;
 
   @override
   void initState() {
     _usd = convert(amount: _defaultValue, to: 'USD', from: 'UAH');
     _eur = convert(amount: _defaultValue, to: 'EUR', from: 'UAH');
+    _pln = convert(amount: _defaultValue, to: 'PLN', from: 'UAH');
+    _gbp = convert(amount: _defaultValue, to: 'GBP', from: 'UAH');
+
     super.initState();
   }
 
@@ -76,6 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     setState(() {
                       _usd = convert(amount: text, to: 'USD', from: 'UAH');
                       _eur = convert(amount: text, to: 'EUR', from: 'UAH');
+                      _pln = convert(amount: text, to: 'PLN', from: 'UAH');
+                      _gbp = convert(amount: text, to: 'GBP', from: 'UAH');
                     });
                   },
                 ),
@@ -84,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   builder: (context, snapshot) {
                     return CurrencyItem(
                       currency: 'USD',
-                      value: snapshot.data?.result.toString() ?? '0',
+                      value: snapshot.data?.result.toStringAsFixed(2) ?? '0',
                     );
                   },
                 ),
@@ -93,18 +100,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   builder: (context, snapshot) {
                     return CurrencyItem(
                       currency: 'EUR',
-                      value: snapshot.data?.result.toString() ?? '0',
+                      value: snapshot.data?.result.toStringAsFixed(2) ?? '0',
                     );
                   },
                 ),
-                const CurrencyItem(
-                  currency: 'PLN',
-                  value: '0',
-                ),
-                const CurrencyItem(
-                  currency: 'GBR',
-                  value: '0',
-                ),
+                FutureBuilder<Converter>(
+                    future: _pln,
+                    builder: (context, snapshot) {
+                      return CurrencyItem(
+                        currency: 'PLN',
+                        value: snapshot.data?.result.toStringAsFixed(2) ?? '0',
+                      );
+                    }),
+                FutureBuilder<Converter>(
+                    future: _gbp,
+                    builder: (context, snapshot) {
+                      return CurrencyItem(
+                        currency: 'GBP',
+                        value: snapshot.data?.result.toStringAsFixed(2) ?? '0',
+                      );
+                    }),
               ],
             ),
           ),
