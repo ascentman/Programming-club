@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Value exchange',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
@@ -35,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late Future<Converter> _eur;
   late Future<Converter> _pln;
   late Future<Converter> _gbp;
+  late Future<Converter> _aed;
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _eur = convert(amount: _defaultValue, to: 'EUR', from: 'UAH');
     _pln = convert(amount: _defaultValue, to: 'PLN', from: 'UAH');
     _gbp = convert(amount: _defaultValue, to: 'GBP', from: 'UAH');
+    _aed = convert(amount: _defaultValue, to: 'AED', from: 'UAH');
 
     super.initState();
   }
@@ -83,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       _eur = convert(amount: text, to: 'EUR', from: 'UAH');
                       _pln = convert(amount: text, to: 'PLN', from: 'UAH');
                       _gbp = convert(amount: text, to: 'GBP', from: 'UAH');
+                      _aed = convert(amount: text, to: 'AED', from: 'UAH');
                     });
                   },
                 ),
@@ -117,6 +120,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     builder: (context, snapshot) {
                       return CurrencyItem(
                         currency: 'GBP',
+                        value: snapshot.data?.result.toStringAsFixed(2) ?? '0',
+                      );
+                    }),
+                FutureBuilder<Converter>(
+                    future: _aed,
+                    builder: (context, snapshot) {
+                      return CurrencyItem(
+                        currency: 'AED',
                         value: snapshot.data?.result.toStringAsFixed(2) ?? '0',
                       );
                     }),
